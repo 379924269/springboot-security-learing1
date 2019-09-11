@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    password: 123456
+    url: jdbc:mysql://localhost:3306/my_new_ptt?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+  profiles:
+    active: @profileActive@
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/modular/*Mapper.xml
+  type-aliases-package: com.dnp.huazai.modular.entity
+  global-config:
+    db-config:
+      id-type: auto
+      table-underline: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    multiple-result-sets-enabled: true
+server:
+  port: 8888
+  servlet:
+    context-path: /security/
+  tomcat:
+    uri-encoding: UTF-8
