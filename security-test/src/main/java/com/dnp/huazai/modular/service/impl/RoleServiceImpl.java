@@ -4,7 +4,10 @@ import com.dnp.huazai.modular.entity.Role;
 import com.dnp.huazai.modular.mapper.RoleMapper;
 import com.dnp.huazai.modular.service.IRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
 
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Override
+    public List<Role> findByUsername(String username) {
+        return roleMapper.findByUsername(username);
+    }
 }
