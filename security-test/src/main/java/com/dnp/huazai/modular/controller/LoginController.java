@@ -51,4 +51,17 @@ public class LoginController {
     public Object logoutHandle() {
         return new JSONObject().put("result", "true").put("msg", "退出成功").toString();
     }
+
+    @RequestMapping(value = "/login/outLine", method = RequestMethod.GET)
+    @ApiOperation(value = "挤下线处理", hidden = true)
+    public Object outLine() {
+        return new JSONObject().put("result", "true").put("msg", "用户被挤下线").toString();
+    }
+
+    @RequestMapping(value = "/login/invalidSession", method = RequestMethod.GET)
+    @ApiOperation(value = "session无效处理", hidden = true)
+    public Object invalidSession() {
+        return new JSONObject().put("result", "true").put("msg", "session无效处理").toString();
+    }
+
 }

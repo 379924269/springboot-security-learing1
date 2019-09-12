@@ -4,11 +4,14 @@ import com.dnp.huazai.authority.CustomUserDetailsService;
 import com.dnp.huazai.handler.MyAuthenctiationFailureHandler;
 import com.dnp.huazai.handler.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -46,11 +49,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login/logoutHandle");
 
         http.authorizeRequests()
-                .antMatchers("xxxxxx").permitAll()
+                .antMatchers("xxxxxx", "/login/invalidSession", "/login/outLine").permitAll()
                 .regexMatchers(".*swagger.*", ".*v2.*", ".*webjars.*").permitAll()
                 .anyRequest().authenticated();
 
         http.exceptionHandling().accessDeniedPage("/login/accessDenied");
+
+        //只允许一个用户登录,如果同一个账户两次登录,那么第一个账户将被踢下线,跳转到处理页面
+        http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry()).expiredUrl("/login/outLine");
+    }
+
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 
 
