@@ -2,8 +2,10 @@ package com.dnp.huazai.modular.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,7 +23,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="User对象", description="用户")
+@ApiModel(value = "User对象", description = "用户")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +36,7 @@ public class User implements Serializable {
     private String loginName;
 
     @ApiModelProperty(value = "用户名")
-    private String name;
+    private String username;
 
     @ApiModelProperty(value = "密码")
     private String password;
@@ -63,7 +65,13 @@ public class User implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-    private String username;
+    @ApiModelProperty(value = "登录错误次数")
+    private Integer loginErrorCount;
 
+    @ApiModelProperty(value = "锁定，0：为锁定，1：锁定")
+    private Integer locked;
+
+    @ApiModelProperty(value = "锁定时间，时间毫秒数")
+    private Long lockedTime;
 
 }

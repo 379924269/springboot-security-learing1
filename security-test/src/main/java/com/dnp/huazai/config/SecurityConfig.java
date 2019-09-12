@@ -1,6 +1,8 @@
 package com.dnp.huazai.config;
 
 import com.dnp.huazai.authority.CustomUserDetailsService;
+import com.dnp.huazai.handler.MyAuthenctiationFailureHandler;
+import com.dnp.huazai.handler.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,6 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private MyAuthenctiationFailureHandler myAuthenctiationFailureHandler;
+
+    @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
@@ -29,9 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors();
 
-        http.formLogin().loginPage("/login/loginPage").permitAll()
-                .successForwardUrl("/login/loginSuccessHandle")
-                .failureForwardUrl("/login/loginFailureHandle");
+        http.formLogin().loginPage("/login").permitAll()
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenctiationFailureHandler);
 
         http.logout().logoutUrl("/logout").permitAll()
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID")

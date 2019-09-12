@@ -23,17 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("")
 public class LoginController {
-    @RequestMapping(value = VersionConst.INTERFACE_VERSION + "/login/login", method = RequestMethod.POST)
-    @ApiOperation(value = "测试接口")
-    public Object findAll(@ApiParam(name = "username", value = "用户名称", required = true, defaultValue = "huazai") @RequestParam String username,
-                          @ApiParam(name = "password", value = "密码", required = true, defaultValue = "123456") @RequestParam String password) {
-        return true;
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ApiOperation(value = "登录接口")
     public void login(@ApiParam(name = "username", value = "用户名称", required = true, defaultValue = "admin") @RequestParam String username,
-                      @ApiParam(name = "password", value = "密码", required = true, defaultValue = "123456") @RequestParam String password) {
+                        @ApiParam(name = "password", value = "密码", required = true, defaultValue = "123456") @RequestParam String password) {
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @ApiOperation(value = "未登录接口（或叫登录界面跳转接口）", hidden = true)
+    public Object login() {
+        return new JSONObject().put("result", "true").put("msg", "请登录").toString();
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
@@ -41,28 +40,10 @@ public class LoginController {
     public void logout() {
     }
 
-    @RequestMapping(value = "/login/loginSuccessHandle", method = RequestMethod.POST)
-    @ApiOperation(value = "登录成功处理接口", hidden = true)
-    public Object loginSuccessHandle() {
-        return new JSONObject().put("result", "true").put("msg", "登录成功").toString();
-    }
-
-    @RequestMapping(value = "/login/loginFailureHandle", method = RequestMethod.POST)
-    @ApiOperation(value = "登录失败处理接口", hidden = true)
-    public Object loginFailureHandle() {
-        return new JSONObject().put("result", "true").put("msg", "登录失败").toString();
-    }
-
     @RequestMapping(value = "/login/accessDenied", method = RequestMethod.POST)
     @ApiOperation(value = "拒绝访问处理", hidden = true)
     public Object accessDenied() {
         return new JSONObject().put("result", "true").put("msg", "拒绝访问").toString();
-    }
-
-    @RequestMapping(value = "/login/loginPage", method = RequestMethod.GET)
-    @ApiOperation(value = "登录页面（未登录处理）", hidden = true)
-    public Object loginPage() {
-        return new JSONObject().put("result", "true").put("msg", "请登录").toString();
     }
 
     @RequestMapping(value = "/login/logoutHandle", method = RequestMethod.GET)
