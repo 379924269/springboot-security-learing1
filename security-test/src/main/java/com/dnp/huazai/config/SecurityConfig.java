@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login/logoutHandle");
 
         http.authorizeRequests()
-                .antMatchers("xxxxxx", "/login/invalidSession", "/login/outLine").permitAll()
+                .antMatchers("/login/invalidSession", "/login/outLine", "/login/checkVerifyCode","/login/getVerifyCode").permitAll()
                 .regexMatchers(".*swagger.*", ".*v2.*", ".*webjars.*").permitAll()
                 .anyRequest().authenticated();
 
