@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,5 +33,12 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         logger.error("业务异常:", e.getMessage());
         return new JSONObject().put("code", 500).put("msg", e.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Object exception(AccessDeniedException e) {
+        logger.error("业务异常:", e.getMessage());
+        return new JSONObject().put("code", HttpStatus.FORBIDDEN.value()).put("msg", e.getLocalizedMessage());
     }
 }

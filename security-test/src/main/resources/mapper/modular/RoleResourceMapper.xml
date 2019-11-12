@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dnp.huazai.modular.mapper.RoleResourceMapper">
-
+    <select id="list" resultType="com.dnp.huazai.vo.RoleResourceVo">
+        SELECT r.url, r2.name as roleName, r.method FROM role_resource rr LEFT JOIN  resource r ON rr.resource_id = r.id
+        LEFT JOIN role r2  ON rr.role_id = r2.id
+    </select>
 </mapper>

@@ -67,9 +67,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("地图系统")
+                .title("springsecurity 学习")
                 .description(new StringBuilder()
-                        .append("map-api文档</br>")
+                        .append("springsecurity文档</br>")
                         .append("1、管理端需要验证的接口，在请求的header加上token</br>")
                         .append("2、返回状态：status:200操作成功， status:1000服务器自定义错误， status:500服务器内部错误,status:400bad request，status：405请求方法不允许，错误结果对象{code：错误代码， msg：错误消息}").toString())
                 .termsOfServiceUrl("")

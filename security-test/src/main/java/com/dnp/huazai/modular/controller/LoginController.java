@@ -2,12 +2,14 @@ package com.dnp.huazai.modular.controller;
 
 
 import com.dnp.huazai.constant.KaptchaConst;
+import com.dnp.huazai.util.ServletUtil;
 import com.dnp.huazai.util.VerifyCodeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +48,8 @@ public class LoginController {
     @RequestMapping(value = "/login/accessDenied", method = RequestMethod.POST)
     @ApiOperation(value = "拒绝访问处理", hidden = true)
     public Object accessDenied() {
-        return new JSONObject().put("result", "true").put("msg", "拒绝访问").toString();
+        ServletUtil.setStatus(HttpStatus.FORBIDDEN.value());
+        return new JSONObject().put("code", HttpStatus.FORBIDDEN.value()).put("msg", "无权限，拒绝访问").toString();
     }
 
     @RequestMapping(value = "/login/logoutHandle", method = RequestMethod.GET)

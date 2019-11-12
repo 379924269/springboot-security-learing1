@@ -40,7 +40,7 @@ public class VerifyCodeUtil {
         producer.setConfig(config);
 
         req.getSession().setAttribute(KaptchaConst.KAPTCHA_SESSION_KEY, capText);
-        req.getSession().setAttribute(KaptchaConst.SESSION_KAPTCH_CODE_KEY_CREATE_TIME, System.currentTimeMillis());
+        req.getSession().setAttribute(KaptchaConst.KAPTCHA_SESSION_DATE, System.currentTimeMillis());
         BufferedImage bi = producer.createImage(capText);
         ServletOutputStream out;
         try {

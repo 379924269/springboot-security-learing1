@@ -1,11 +1,16 @@
 package com.dnp.huazai.config;
 
 import com.dnp.huazai.authority.CustomUserDetailsService;
+import com.dnp.huazai.config.permission.CustomAccessDecisionManager;
+import com.dnp.huazai.config.permission.CustomFilterSecurityInterceptor;
+import com.dnp.huazai.config.permission.CustomSecurityMetadataSource;
 import com.dnp.huazai.handler.MyAuthenctiationFailureHandler;
 import com.dnp.huazai.handler.MyAuthenticationSuccessHandler;
+import com.dnp.huazai.modular.mapper.RoleResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -28,6 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private RoleResourceMapper roleResourceMapper;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -53,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .regexMatchers(".*swagger.*", ".*v2.*", ".*webjars.*").permitAll()
                 .anyRequest().authenticated();
 
+        //403 处理
         http.exceptionHandling().accessDeniedPage("/login/accessDenied");
 
         //只允许一个用户登录,如果同一个账户两次登录,那么第一个账户将被踢下线,跳转到处理页面
@@ -80,5 +92,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 return s.equals(charSequence);
             }
         });
+    }
+
+    @Bean
+    public CustomSecurityMetadataSource securityMetadataSource() {
+        return new CustomSecurityMetadataSource(roleResourceMapper.list());
+    }
+
+    @Bean
+    public CustomAccessDecisionManager accessDecisionManager() {
+        return new CustomAccessDecisionManager();
+    }
+
+    @Bean
+    public CustomFilterSecurityInterceptor customFilter() throws Exception{
+        CustomFilterSecurityInterceptor customFilter = new CustomFilterSecurityInterceptor();
+        customFilter.setSecurityMetadataSource(securityMetadataSource());
+        customFilter.setAccessDecisionManager(accessDecisionManager());
+        customFilter.setAuthenticationManager(authenticationManager);
+        return customFilter;
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
