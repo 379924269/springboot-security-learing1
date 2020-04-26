@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Enumeration;
 
+/**
+ * description: 权限拦截器
+ * @author: 华仔
+ * @date: 2020/4/2
+ */
 @Slf4j
 public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
     private FilterInvocationSecurityMetadataSource securityMetadataSource;

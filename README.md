@@ -1,4 +1,5 @@
 ## springboot-security web学习
+为什么要用springbootsecurity
 
 ###项目的要求：
 ####1、权限：动态权限
@@ -6,7 +7,9 @@
 ````
 调用验证码库实现的kaptcha
 ````
+
 ####3、用户锁定
+[锁定可以参考地址](https://www.cnblogs.com/zimug/p/11946727.html)
 ````
   自定义成功失败处理类，添加到httpsecurity中，实现锁定， 解锁，通过CustomUserDetailsService中验证用户的时候，处理的
 ````

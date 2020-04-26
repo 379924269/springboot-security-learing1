@@ -47,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 authorities.add(authority);
             }
         }
-
+//明天来改一下这里， 参考https://blog.csdn.net/I_am_Hutengfei/article/details/100561564 的userdetail
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 

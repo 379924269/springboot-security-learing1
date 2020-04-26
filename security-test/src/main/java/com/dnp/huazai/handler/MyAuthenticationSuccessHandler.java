@@ -1,6 +1,5 @@
 package com.dnp.huazai.handler;
 
-import com.dnp.huazai.constant.ExceptionConst;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -19,6 +18,9 @@ import java.io.IOException;
  */
 @Component
 public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+    //    这里可以调用service接口  查询数据库数据返回给客户端
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 //       登录成功要什么其他信息，后面再加
