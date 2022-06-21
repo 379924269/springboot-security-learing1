@@ -17,7 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <velocity.version>1.7</velocity.version>
-        <mysql.version>5.1.43</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <mybatis-plus-generator.version>3.1.0</mybatis-plus-generator.version>
     </properties>
 
